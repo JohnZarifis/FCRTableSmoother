@@ -100,12 +100,15 @@ if (input$ToolTip)
 Lhc %>% 
   hc_exporting(
     enabled = TRUE
-  ) #%>%
+  ) %>% hc_size(height = 600)
+
+
+#%>%
   #hc_tooltip(crosshairs = TRUE, backgroundColor = "#FCFFC5",
   #          shared = TRUE, borderWidth = 1) #%>% 
   #hc_title(text = "Draggable FCR Table")%>%
   #hc_subtitle(text = "Rearange me and Export New Data")
-
+  
 })
 
  observeEvent(input$goButton ,{
