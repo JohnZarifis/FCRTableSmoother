@@ -1,0 +1,51 @@
+library paths:
+... C:/Users/g.zarifis/Desktop/PortableDM/dist/R-Portable/App/R-Portable/library
+Loading required package: shiny
+Loading required package: methods
+
+Attaching package: 'shinydashboard'
+
+The following object is masked from 'package:graphics':
+
+    box
+
+Highcharts (www.highcharts.com) is a Highsoft software product which is
+not free for commercial and Governmental use
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+Loading required package: xts
+Loading required package: zoo
+
+Attaching package: 'zoo'
+
+The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric
+
+
+Attaching package: 'xts'
+
+The following objects are masked from 'package:dplyr':
+
+    first, last
+
+Loading required package: TTR
+Version 0.4-0 included new data defaults. See ?getSymbols.
+
+Attaching package: 'DT'
+
+The following objects are masked from 'package:shiny':
+
+    dataTableOutput, renderDataTable
+
+
+Listening on http://127.0.0.1:5153
