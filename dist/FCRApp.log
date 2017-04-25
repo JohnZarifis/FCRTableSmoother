@@ -40,8 +40,9 @@ label: unnamed-chunk-1
   |                                                                         |.................................................................| 100%
 label: unnamed-chunk-2
 
-output file: C:/Users/g.zarifis/AppData/Local/Temp/RtmpiwiHFk/index.knit.md
+output file: C:/Users/g.zarifis/AppData/Local/Temp/RtmpcJ19TP/index.knit.md
 
-"C:/Users/G3512~1.ZAR/AppData/Local/Pandoc/pandoc" +RTS -K512m -RTS "C:/Users/g.zarifis/AppData/Local/Temp/RtmpiwiHFk/index.utf8.md" --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output pandoc15e445aa66.html --smart --email-obfuscation none --standalone --section-divs --template "C:\Users\g.zarifis\Desktop\PortableDM\dist\R-Portable\App\R-Portable\library\flexdashboard\rmarkdown\templates\flex_dashboard\resources\default.html" --variable "theme:cosmo" --mathjax --variable "mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" --include-in-header "C:\Users\G3512~1.ZAR\AppData\Local\Temp\RtmpiwiHFk\file15e4114e57html" --highlight-style pygments --include-before-body "C:\Users\G3512~1.ZAR\AppData\Local\Temp\RtmpiwiHFk\file15e44ba710a1.html" --include-after-body "C:\Users\G3512~1.ZAR\AppData\Local\Temp\RtmpiwiHFk\file15e41ad67aa8.html" --id-prefix section- 
+"C:/Users/G3512~1.ZAR/Desktop/PORTAB~1/dist/R-PORT~2/pandoc/pandoc" +RTS -K512m -RTS "C:/Users/g.zarifis/AppData/Local/Temp/RtmpcJ19TP/index.utf8.md" --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output pandoc2b182f071e65.html --smart --email-obfuscation none --standalone --section-divs --template "C:\Users\g.zarifis\Desktop\PortableDM\dist\R-Portable\App\R-Portable\library\flexdashboard\rmarkdown\templates\flex_dashboard\resources\default.html" --variable "theme:cosmo" --mathjax --variable "mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" --include-in-header "C:\Users\G3512~1.ZAR\AppData\Local\Temp\RtmpcJ19TP\file2b1819416475html" --highlight-style pygments --include-before-body "C:\Users\G3512~1.ZAR\AppData\Local\Temp\RtmpcJ19TP\file2b181acf4826.html" --include-after-body "C:\Users\G3512~1.ZAR\AppData\Local\Temp\RtmpcJ19TP\file2b18d6c6f3b.html" --id-prefix section- 
 
-Output created: C:/Users/g.zarifis/AppData/Local/Temp/RtmpiwiHFk/file15e473127b20.html
+Output created: C:/Users/g.zarifis/AppData/Local/Temp/RtmpcJ19TP/file2b18630953c5.html
+^C
