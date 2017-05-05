@@ -116,6 +116,10 @@ Lhc %>%
       stopApp()
     }
   )
+ 
+ session$onSessionEnded(function() {
+        stopApp()
+    })
 
 
 
