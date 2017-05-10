@@ -1,3 +1,3 @@
 <Records>
-<db>driver={SQL Server Native Client 11.0};server=10.1.1.120;Database=Aquagrowth3;Uid=sa;Pwd=1q2w3e!Q@W#E</db>
+<db>driver={SQL Server Native Client 11.0};server=localhost;Database=Aquamanager;Uid=sa;Pwd=1q2w3e!Q@W#E</db>
 </Records>
