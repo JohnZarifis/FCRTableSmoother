@@ -10,14 +10,19 @@ library(datasets)
 library(highcharter)
 library(RODBC)
 library(dplyr)
+library(XML)
+library(methods)
 
 # remove saved data
 rm(list=ls())
 
 jscode <- "Shiny.addCustomMessageHandler('closeWindow', function(m) {window.close();});"
 
+ini <- xmlTreeParse(file = "ini.xml")
+dbvalue <- xmlValue(ini[[1]][[1]])
 
-dbhandle <- odbcDriverConnect("driver={SQL Server Native Client 11.0};server= 10.1.1.120;Database=Aquagrowth3;Uid=sa;Pwd=1q2w3e!Q@W#E")
+dbhandle <- odbcDriverConnect(dbvalue)
+#dbhandle <- odbcDriverConnect("driver={SQL Server Native Client 11.0};server= 10.1.1.120;Database=Aquagrowth3;Uid=sa;Pwd=1q2w3e!Q@W#E")
 #dbhandle <- odbcDriverConnect("Driver=ODBC Driver 11 for SQL Server;Server=10.1.1.120; Database=Aquagrowth3;Uid=sa; Pwd=1q2w3e!Q@W#E; trusted_connection=no")
 
 FCR <- sqlQuery(dbhandle, "WITH FCRTable ( FromWeight, ToWeight, Temp, Factor , TemplateName)
