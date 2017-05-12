@@ -1,0 +1,160 @@
+---
+title: "FCR Table Smoother"
+output: flexdashboard::flex_dashboard
+runtime: shiny
+---
+
+```{r global, include=FALSE}
+# load data in 'global' chunk so it can be shared by all users of the dashboard
+library(datasets)
+library(highcharter)
+library(RODBC)
+library(dplyr)
+library(XML)
+library(methods)
+library(readxl)
+
+# remove saved data
+rm(list=ls())
+
+jscode <- "Shiny.addCustomMessageHandler('closeWindow', function(m) {window.close();});"
+
+
+ini <- xmlTreeParse(file = "ini.xml")
+dbvalue <- xmlValue(ini[[1]][[1]])
+
+#dbhandle <- odbcDriverConnect(dbvalue)
+dbhandle <- odbcDriverConnect("driver={SQL Server Native Client 11.0};server= 10.1.1.120;Database=Aquagrowth3;Uid=sa;Pwd=1q2w3e!Q@W#E")
+#dbhandle <- odbcDriverConnect("Driver=ODBC Driver 11 for SQL Server;Server=10.1.1.120; Database=Aquagrowth3;Uid=sa; Pwd=1q2w3e!Q@W#E; trusted_connection=no")
+
+FCR <- sqlQuery(dbhandle, "WITH FCRTable ( FromWeight, ToWeight, Temp, Factor , TemplateName)
+as
+(
+SELECT 
+                   FromWeight
+				  ,isNull((SELECT TOP 1 FromWeight FROM [FCRValue] V1
+				   WHERE V1.FromWeight > V.FromWeight and V1.FCRTemplateID = V.FCRTemplateID
+				   ORDER BY FromWeight),10000) AS ToWeight
+                  ,[Temp]
+                  ,[Factor]
+                  ,T.TemplateName
+                  FROM [FCRValue] V
+                  inner join [FCRTemplate] T
+                  on V.FCRTemplateID = T.FCRTemplateID
+                  -- where 
+                  -- Factor >0 
+				  
+)
+Select  cast(FromWeight as varchar(10)) + '-'+ cast(ToWeight as varchar(10)) AS WeightCategory, FromWeight, ToWeight, Temp, Factor , TemplateName
+FROM FCRTable order by FromWeight, Temp")
+
+odbcClose(dbhandle)
+
+#saveRDS(FCR, ".FCR.rds")
+
+#FCR <- readRDS(".FCR.rds")
+
+
+```
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+Select FCR Table. You can drag the points and export data to different formats when you are done.
+
+
+```{r}
+selectInput("Template", label = "FCR Table:",
+            choices = FCR$TemplateName)
+
+
+sliderInput("Temp", label = "Temperature:",
+            min = min(FCR$Temp), max = max(FCR$Temp), value = c(10,28), step = 1)
+
+selectInput("chart", label = "Chart Type:",
+            choices = c("scatter","line"), selected = "line")
+
+checkboxInput("ToolTip", "ToolTip", TRUE)
+
+tags$hr()
+fileInput('file', 'Choose Excel File...', accept = c('.xls', '.xlsx'))
+
+tags$hr()
+actionButton("goButton", "Close App" ,  icon = icon("power-off"),class="btn-success")
+
+```
+
+
+Column
+-----------------------------------------------------------------------
+
+### Draggable FCR Table - Rearange Table and Export New Data
+
+```{r}
+renderHighchart({
+  
+validate(
+  need(input$Template %in%  FCR$TemplateName
+   #need(
+    # input$Template != ""#!is.null(input$Template)
+     ,"Please Choose a Template.")
+   )  
+
+# IF input false ....
+FCR <- filter(FCR,TemplateName == input$Template & Temp %in% c( as.numeric(input$Temp[1]):as.numeric(input$Temp[2]) ))
+Lhc <- hchart( FCR, input$chart , hcaes(x = Temp,y = Factor, group = FromWeight),draggableY = TRUE 
+  #,height = "600px"             
+)
+if (input$ToolTip)
+    Lhc <- Lhc %>% hc_tooltip( backgroundColor = "#FCFFC5", shared = TRUE, borderWidth = 1 )
+Lhc %>% 
+  hc_exporting(
+    enabled = TRUE
+  ) %>% hc_size(height = 600)
+
+
+#%>%
+  #hc_tooltip(crosshairs = TRUE, backgroundColor = "#FCFFC5",
+  #          shared = TRUE, borderWidth = 1) #%>% 
+  #hc_title(text = "Draggable FCR Table")%>%
+  #hc_subtitle(text = "Rearange me and Export New Data")
+  
+})
+
+ observeEvent(input$goButton ,{
+      session$sendCustomMessage(type = "closeWindow", message = "message")
+      stopApp()
+    }
+  )
+ 
+ session$onSessionEnded(function() {
+        stopApp()
+    })
+
+ # Inpt.Dataset <- reactive({ 
+observeEvent(input$file ,{
+    inFile <- input$file
+    
+    if (is.null(inFile)){
+       return(NULL)
+    }
+    
+    # Read from the input file
+    newpath.filename <- paste(inFile$datapath, "xlsx", sep=".")
+    file.rename(inFile$datapath, newpath.filename)
+    
+        dset <- read_excel(newpath.filename)
+    
+    View(dset)
+    print(dset)
+    saveRDS(dset, "._FCR.rds")
+    return(dset)
+}
+  )
+    
+ # })
+
+
+
+
+```
